@@ -1,3 +1,4 @@
+#[derive(Debug, Clone, Copy)]
 pub struct ScryptParams {
     nfactor: u8,
     rfactor: u8,
