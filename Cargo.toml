@@ -1,0 +1,10 @@
+[package]
+name = "scrypt-jane"
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+members = ["scrypt-jane-sys"]
+
+[dependencies]
+scrypt-jane-sys = { version = "0.1.0", path = "scrypt-jane-sys" }

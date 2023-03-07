@@ -1,0 +1,14 @@
+[package]
+name = "scrypt-jane-sys"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+path = "src/lib.rs"
+
+[build-dependencies]
+cc = "*"
+bindgen = "*"
+
+[dependencies]
+bytemuck = "1.13.1"

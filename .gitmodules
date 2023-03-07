@@ -1,0 +1,3 @@
+[submodule "scrypt-jane-sys/scrypt-jane"]
+	path = scrypt-jane-sys/scrypt-jane
+	url = https://github.com/floodyberry/scrypt-jane.git
