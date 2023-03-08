@@ -10,7 +10,10 @@ fn main() {
 
     let dst = PathBuf::from(env::var_os("OUT_DIR").unwrap());
 
+    println!("cargo:rerun-if-changed=scrypt-jane/*");
+
     cfg.include("scrypt-jane/code")
+        .opt_level(3)
         .include("scrypt-jane")
         .define("SCRYPT_CHACHA", None)
         .define("SCRYPT_KECCAK512", None)
