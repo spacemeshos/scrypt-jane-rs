@@ -5,7 +5,7 @@ mod ffi {
     include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 }
 
-pub use ffi::scrypt;
+pub use ffi::{free_instance, new_instance, scrypt, scrypt_instance, scrypt_preallocated};
 
 #[cfg(test)]
 mod tests {
@@ -53,5 +53,40 @@ mod tests {
             ],
             out
         );
+    }
+
+    #[test]
+    fn scrypt_with_preallocated() {
+        let instance = unsafe { ffi::new_instance(9, 3, 4) };
+
+        let password = b"password";
+        let salt = b"NaCl";
+        let mut out = [0u8; 64];
+
+        unsafe {
+            ffi::scrypt_preallocated(
+                instance,
+                password.as_ptr(),
+                password.len(),
+                salt.as_ptr(),
+                salt.len(),
+                out.as_mut_ptr(),
+                out.len(),
+            );
+        }
+        assert_eq!(
+            [
+                0xc6, 0x43, 0x17, 0x16, 0x87, 0x09, 0x5f, 0x12, 0xed, 0x21, 0xe2, 0xb4, 0xad, 0x55,
+                0xa1, 0xa1, 0x49, 0x50, 0x90, 0x70, 0xab, 0x81, 0x83, 0x7a, 0xcd, 0xdf, 0x23, 0x52,
+                0x19, 0xc0, 0xa2, 0xd8, 0x8e, 0x98, 0xeb, 0xf0, 0x37, 0xab, 0xad, 0xfd, 0x1c, 0x04,
+                0x97, 0x18, 0x42, 0x85, 0xf7, 0x4b, 0x18, 0x2c, 0x55, 0xd3, 0xa9, 0xe6, 0x89, 0xfb,
+                0x58, 0x0a, 0xb2, 0x37, 0xb9, 0xf8, 0xfb, 0xc5
+            ],
+            out
+        );
+
+        unsafe {
+            ffi::free_instance(instance);
+        }
     }
 }

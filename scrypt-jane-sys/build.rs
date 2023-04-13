@@ -32,6 +32,10 @@ fn main() {
     let bindings = bindgen::Builder::default()
         .header("wrapper.h")
         .allowlist_function("scrypt")
+        .allowlist_function("new_instance")
+        .allowlist_function("free_instance")
+        .allowlist_function("scrypt_preallocated")
+        .allowlist_type("scrypt_instance")
         .parse_callbacks(Box::new(bindgen::CargoCallbacks))
         .generate()
         .expect("Unable to generate bindings");
